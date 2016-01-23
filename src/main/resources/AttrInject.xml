@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="person1" class="ren.consoles.spring.attrInject.Person"
+		p:sex="true">
+		<property name="name" value="大梦初晓" />
+		<property name="age">
+			<value>10</value>
+		</property>
+	</bean>
+
+	<!-- Customer内部聚合了Person类,通过ref -->
+	<bean id="customer1" class="ren.consoles.spring.attrInject.Customer">
+		<property name="person" ref="person1"></property>
+	</bean>
+	<!-- 内部Bean的注入，属性注入 -->
+	<bean id="customer2" class="ren.consoles.spring.attrInject.Customer">
+		<property name="person">
+			<bean class="ren.consoles.spring.attrInject.Person">
+				<property name="name" value="萧晚晴"></property>
+				<property name="age" value="18"></property>
+				<property name="sex" value="false"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 内部Bean的注入，构造器注入 -->
+	<bean id="customer3" class="ren.consoles.spring.attrInject.Customer">
+		<constructor-arg>
+			<bean class="ren.consoles.spring.attrInject.Person">
+				<property name="name" value="陆雪琪"></property>
+				<property name="age" value="20"></property>
+				<property name="sex" value="false"></property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<!-- 复杂属性的注入，Map，List，Set，数组 -->
+	<bean id="customer4" class="ren.consoles.spring.attrInject.Customer">
+		<property name="person">
+			<bean class="ren.consoles.spring.attrInject.Person" p:name="晏紫苏"
+				p:age="16" p:sex="false" />
+		</property>
+
+		<property name="lists">
+			<list>
+				<value>1</value>
+				<value>2</value>
+				<bean class="ren.consoles.spring.attrInject.Person" p:name="haha"
+				p:age="16" p:sex="false" />
+			</list>
+		</property>
+		<property name="sets">
+			<set>
+				<value>11</value>
+				<value>22</value>
+				<ref local="customer3"/>
+			</set>
+		</property>
+		<property name="maps">
+			<map>
+				<entry key="key1" value="value1" />
+				<entry key="key2" value-ref="person1" />
+			</map>
+		</property>
+		<property name="properties">
+			<props>
+				<prop key="username">
+					io
+				</prop>
+				<prop key="email">
+					io@git.com
+				</prop>
+			</props>
+		</property>
+		<property name="arr">
+			<array>
+				<value>1</value>
+				<value>2</value>
+			</array>
+		</property>
+	</bean>
+</beans>

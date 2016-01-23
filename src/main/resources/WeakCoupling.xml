@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="outputHelp" class="ren.consoles.spring.weakCoupling.OutputHelp">
+    	<!-- 更改此处的ref属性即可实现轻松解耦 -->
+    	<!-- 
+        <property name="output" ref="jsonOutput" />
+         -->
+        <!-- 如果引用的是本配置文件中的bean，可以这样 -->
+        <property name="output">
+        	<ref local="jsonOutput"/>
+        </property>
+    </bean>
+	
+	<bean id="xmlOutput" class="ren.consoles.spring.weakCoupling.XMLOutputImpl"></bean>
+	<bean id="jsonOutput" class="ren.consoles.spring.weakCoupling.JSONOutputImpl"></bean>
+</beans>

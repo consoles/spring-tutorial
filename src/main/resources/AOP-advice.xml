@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="customerService" class="ren.consoles.spring.aop.advice.CustomerService">
+		<property name="name" value="consoles" />
+		<property name="url" value="https://github.com/u/consoles" />
+	</bean>
+
+	<!-- Spring 通知 -->
+	<bean id="hijackBeforeMethodBean" class="ren.consoles.spring.aop.advice.HijackBeforeMethod" />
+	<bean id="hijackAfterMethodBean" class="ren.consoles.spring.aop.advice.HijackAfterMethod" />
+	<bean id="hijackThrowExceptionBean" class="ren.consoles.spring.aop.advice.HijackThrowException" />
+ 	<bean id="hijackAroundMethodBean" class="ren.consoles.spring.aop.advice.HijackAroundMethod" />
+ 		
+	<bean id="customerServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="customerService" />
+		<property name="interceptorNames">
+			<list>
+			<!-- 
+				<value>hijackBeforeMethodBean</value>
+				<value>hijackAfterMethodBean</value>
+				<value>hijackThrowExceptionBean</value>
+			 -->
+			 <value>hijackAroundMethodBean</value>	
+			</list>
+		</property>
+	</bean>
+</beans>
